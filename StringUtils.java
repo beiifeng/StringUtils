@@ -56,14 +56,16 @@ public class StringUtils {
         List<String> result = new ArrayList<>();
         int length;
 
+        charsetName = charsetName.toUpperCase();
         byte[] bs = orgin.getBytes(charsetName);
+
         while (bs.length > 0) {
             length = blength;
             if (length >= bs.length) {
                 result.add(new String(bs, 0, bs.length, charsetName));
                 break;
             }
-            if ("UTF8".equals(charsetName.toUpperCase()) || "UTF-8".equals(charsetName.toUpperCase())) {
+            if ("UTF8".equals(charsetName) || "UTF-8".equals(charsetName)) {
                 // utf8 encoding
                 // 0000 0000 - 0000 007F 0xxxxxxx
                 // 0000 0080 - 0000 07FF 110xxxxx 10xxxxxx
@@ -84,7 +86,7 @@ public class StringUtils {
                     }
                     length--;
                 }
-            } else if ("GBK".equals(charsetName.toUpperCase())) {
+            } else if ("GBK".equals(charsetName)) {
                 boolean removLast = length % 2 == 1;
                 for (int i = 0; i < length; i++) {
                     if ((bs[i] | 0x7F) == 0x7F) {
@@ -94,19 +96,19 @@ public class StringUtils {
                 if (removLast) {
                     length--;
                 }
-            } else if ("UNICODE".equals(charsetName.toUpperCase())) {
+            } else if ("UNICODE".equals(charsetName)) {
                 if (length % 2 == 1) {
                     length--;
                 }
-            } else if ("UTF-16".equals(charsetName.toUpperCase()) || "UTF16".equals(charsetName.toUpperCase())) {
+            } else if ("UTF-16".equals(charsetName) || "UTF16".equals(charsetName)) {
                 if (length % 2 == 1) {
                     length--;
                 }
-            } else if ("UTF-16BE".equals(charsetName.toUpperCase())) {
+            } else if ("UTF-16BE".equals(charsetName)) {
                 if (length % 2 == 1) {
                     length--;
                 }
-            } else if ("UTF-16LE".equals(charsetName.toUpperCase())) {
+            } else if ("UTF-16LE".equals(charsetName)) {
                 if (length % 2 == 1) {
                     length--;
                 }
@@ -115,6 +117,9 @@ public class StringUtils {
             bs = Arrays.copyOfRange(bs, length, bs.length);
         }
 
+        if (result.size() == 0) {
+            result.add("");
+        }
         return result;
     }
 
