@@ -78,12 +78,6 @@ public class StringUtils {
                     if ((bs[length] & 0xC0) == 0xC0) {
                         break;
                     }
-                    if ((bs[length] & 0xE0) == 0xE0) {
-                        break;
-                    }
-                    if ((bs[length] & 0xF0) == 0xF0) {
-                        break;
-                    }
                     length--;
                 }
             } else if ("GBK".equals(charsetName)) {
